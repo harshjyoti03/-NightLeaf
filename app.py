@@ -38,6 +38,44 @@ def home():
     )
 
 
+@app.route("/search")
+def search():
+    q = request.args.get("q", "").strip()
+    page = int(request.args.get("page", 1))
+    offset = (page - 1) * PER_PAGE
+
+    manga = []
+    total_pages = 0
+
+    if q:
+        manga = query(
+            """
+            SELECT id, title, image
+            FROM manga
+            WHERE title LIKE ?
+            ORDER BY title
+            LIMIT ? OFFSET ?
+            """,
+            (f"%{q}%", PER_PAGE, offset)
+        )
+
+        total = query(
+            "SELECT COUNT(*) AS c FROM manga WHERE title LIKE ?",
+            (f"%{q}%",),
+            one=True
+        )["c"]
+
+        total_pages = math.ceil(total / PER_PAGE)
+
+    return render_template(
+        "search.html",
+        manga=manga,
+        q=q,
+        page=page,
+        total_pages=total_pages
+    )
+
+
 @app.route("/manga/<int:manga_id>")
 def manga_detail(manga_id):
     manga = query("SELECT * FROM manga WHERE id=?", (manga_id,), one=True)

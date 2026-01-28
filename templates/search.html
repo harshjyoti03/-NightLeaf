@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manga Explorer</title>
+    <title>Search Manga</title>
     <style>
         body { background:#0f0f0f; color:white; font-family:Arial; padding:20px; }
         h1 { text-align:center; }
@@ -26,26 +26,23 @@
             text-align:center;
             margin:30px 0;
         }
-        .pager a {
-            color:#4da6ff;
-            margin:0 10px;
-        }
         input {
-            width:80px;
-            padding:5px;
-            margin-left:10px;
+            padding:6px;
+            width:200px;
         }
     </style>
 </head>
 <body>
 
-<h1>📚 Manga Explorer</h1>
+<h1>🔍 Search Manga</h1>
 
-<p style="text-align:center;">
-    <a href="/search">🔍 Search Manga</a>
-</p>
+<form method="get" action="/search" style="text-align:center;">
+    <input type="text" name="q" value="{{ q }}" placeholder="Enter manga title..." required>
+    <button type="submit">Search</button>
+</form>
 
-<div class="grid">
+{% if manga %}
+<div class="grid" style="margin-top:30px;">
 {% for m in manga %}
     <div class="card">
         <a href="/manga/{{ m.id }}">
@@ -58,20 +55,26 @@
 
 <div class="pager">
     {% if page > 1 %}
-        <a href="/?page={{ page - 1 }}">⬅ Prev</a>
+        <a href="/search?q={{ q }}&page={{ page - 1 }}">⬅ Prev</a>
     {% endif %}
 
     Page {{ page }} of {{ total_pages }}
 
     {% if page < total_pages %}
-        <a href="/?page={{ page + 1 }}">Next ➡</a>
+        <a href="/search?q={{ q }}&page={{ page + 1 }}">Next ➡</a>
     {% endif %}
 
-    <form method="get" action="/" style="display:inline;">
+    <form method="get" action="/search" style="display:inline;">
+        <input type="hidden" name="q" value="{{ q }}">
         <input type="number" name="page" min="1" max="{{ total_pages }}" placeholder="Page #" required>
         <button type="submit">Go</button>
     </form>
 </div>
+{% endif %}
+
+<p style="text-align:center;">
+    <a href="/">⬅ Back to Home</a>
+</p>
 
 </body>
 </html>
