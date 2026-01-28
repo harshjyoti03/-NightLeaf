@@ -1,80 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search Manga</title>
-    <style>
-        body { background:#0f0f0f; color:white; font-family:Arial; padding:20px; }
-        h1 { text-align:center; }
-        .grid {
-            display:grid;
-            grid-template-columns:repeat(auto-fill,180px);
-            gap:20px;
-        }
-        .card {
-            background:#1e1e1e;
-            padding:10px;
-            border-radius:10px;
-        }
-        img {
-            width:100%;
-            height:260px;
-            object-fit:cover;
-            border-radius:8px;
-        }
-        a { color:white; text-decoration:none; }
-        .pager {
-            text-align:center;
-            margin:30px 0;
-        }
-        input {
-            padding:6px;
-            width:200px;
-        }
-    </style>
+  <title>Search – NightLeaf</title>
+  <link rel="stylesheet" href="/static/css/base.css">
 </head>
 <body>
 
-<h1>🔍 Search Manga</h1>
-
-<form method="get" action="/search" style="text-align:center;">
-    <input type="text" name="q" value="{{ q }}" placeholder="Enter manga title..." required>
-    <button type="submit">Search</button>
-</form>
-
-{% if manga %}
-<div class="grid" style="margin-top:30px;">
-{% for m in manga %}
-    <div class="card">
-        <a href="/manga/{{ m.id }}">
-            <img src="{{ m.image }}">
-            <h4>{{ m.title }}</h4>
-        </a>
-    </div>
-{% endfor %}
+<div class="header">
+  <a href="/" class="logo">
+    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}" alt="NightLeaf Logo">
+    <span>NightLeaf</span>
+  </a>
 </div>
 
-<div class="pager">
+<div class="page-content">
+
+  <div style="text-align:center; margin-bottom:25px;">
+    <form method="get" action="/search">
+      <input type="text" name="q" value="{{ q }}" placeholder="Search manga..." style="width:280px;">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <div class="grid">
+    {% for m in manga %}
+    <div class="card">
+      <a href="/manga/{{ m.id }}">
+        <img src="{{ m.image }}">
+        <h3>{{ m.title }}</h3>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="pager">
     {% if page > 1 %}
-        <a href="/search?q={{ q }}&page={{ page - 1 }}">⬅ Prev</a>
+      <a href="/search?q={{ q }}&page={{ page-1 }}">⬅ Prev</a>
     {% endif %}
 
-    Page {{ page }} of {{ total_pages }}
+    Page <b>{{ page }}</b> of <b>{{ total_pages }}</b>
 
     {% if page < total_pages %}
-        <a href="/search?q={{ q }}&page={{ page + 1 }}">Next ➡</a>
+      <a href="/search?q={{ q }}&page={{ page+1 }}">Next ➡</a>
     {% endif %}
 
-    <form method="get" action="/search" style="display:inline;">
-        <input type="hidden" name="q" value="{{ q }}">
-        <input type="number" name="page" min="1" max="{{ total_pages }}" placeholder="Page #" required>
-        <button type="submit">Go</button>
+    <form method="get" action="/search" style="display:inline-block; margin-left:10px;">
+      <input type="hidden" name="q" value="{{ q }}">
+      <input type="number" name="page" min="1" max="{{ total_pages }}" placeholder="Go">
+      <button type="submit">Go</button>
     </form>
+  </div>
+
 </div>
-{% endif %}
-
-<p style="text-align:center;">
-    <a href="/">⬅ Back to Home</a>
-</p>
-
 </body>
 </html>

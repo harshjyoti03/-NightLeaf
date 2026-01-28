@@ -6,7 +6,6 @@ app = Flask(__name__)
 DB = "database.db"
 PER_PAGE = 50
 
-
 def query(sql, args=(), one=False):
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
@@ -15,7 +14,6 @@ def query(sql, args=(), one=False):
     rows = cur.fetchall()
     conn.close()
     return (rows[0] if rows else None) if one else rows
-
 
 @app.route("/")
 def home():
@@ -36,7 +34,6 @@ def home():
         page=page,
         total_pages=total_pages
     )
-
 
 @app.route("/search")
 def search():
@@ -75,12 +72,10 @@ def search():
         total_pages=total_pages
     )
 
-
 @app.route("/manga/<int:manga_id>")
 def manga_detail(manga_id):
     manga = query("SELECT * FROM manga WHERE id=?", (manga_id,), one=True)
     return render_template("manga.html", manga=manga)
-
 
 if __name__ == "__main__":
     app.run(debug=True)

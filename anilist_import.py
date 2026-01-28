@@ -53,7 +53,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-def import_manga(pages=200):  # 200 × 50 = 10,000
+def import_manga(pages=200):
     conn = sqlite3.connect(DB)
     cur = conn.cursor()
 
