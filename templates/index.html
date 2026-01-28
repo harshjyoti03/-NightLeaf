@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manga Explorer</title>
+    <style>
+        body { background:#0f0f0f; color:white; font-family:Arial; padding:20px; }
+        h1 { text-align:center; }
+        .grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fill,180px);
+            gap:20px;
+        }
+        .card {
+            background:#1e1e1e;
+            padding:10px;
+            border-radius:10px;
+            transition:0.2s;
+        }
+        .card:hover { transform:scale(1.05); }
+        img {
+            width:100%;
+            height:260px;
+            object-fit:cover;
+            border-radius:8px;
+        }
+        a { color:white; text-decoration:none; }
+        .pager {
+            text-align:center;
+            margin:30px 0;
+        }
+        .pager a {
+            color:#4da6ff;
+            margin:0 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📚 Manga Explorer</h1>
+
+<div class="grid">
+{% for m in manga %}
+    <div class="card">
+        <a href="/manga/{{ m.id }}">
+            <img src="{{ m.image }}" alt="{{ m.title }}">
+            <h4>{{ m.title }}</h4>
+        </a>
+    </div>
+{% endfor %}
+</div>
+
+<div class="pager">
+    {% if page > 1 %}
+        <a href="/?page={{ page - 1 }}">⬅ Prev</a>
+    {% endif %}
+
+    Page {{ page }} of {{ total_pages }}
+
+    {% if page < total_pages %}
+        <a href="/?page={{ page + 1 }}">Next ➡</a>
+    {% endif %}
+</div>
+
+</body>
+</html>

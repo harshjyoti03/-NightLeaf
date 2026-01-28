@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ manga.title }}</title>
+    <style>
+        body { background:#0f0f0f; color:white; font-family:Arial; padding:30px; }
+        a { color:#4da6ff; text-decoration:none; }
+        .wrap { display:flex; gap:30px; max-width:1000px; }
+        img { width:250px; border-radius:10px; }
+        p { line-height:1.6; }
+    </style>
+</head>
+<body>
+
+<a href="/">⬅ Back</a>
+
+<div class="wrap">
+    <img src="{{ manga.image }}">
+    <div>
+        <h1>{{ manga.title }}</h1>
+        <p><b>Authors:</b> {{ manga.authors }}</p>
+        <p><b>Genres:</b> {{ manga.genres }}</p>
+        <p><b>Status:</b> {{ manga.status }}</p>
+        <p><b>Released:</b> {{ manga.year }}</p>
+        <p>{{ manga.description }}</p>
+    </div>
+</div>
+
+</body>
+</html>
