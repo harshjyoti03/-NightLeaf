@@ -69,12 +69,15 @@ This project focuses on **clean UI/UX**, **scalable backend design**, and **real
 
 ---
 
+
 ## 📁 Project Structure
 
 ```text
 .
 ├── app.py
-├── database.db
+├── anilist_import.py
+├── db_migrate.py
+├── database.db        # generated at runtime
 ├── templates/
 │   ├── landing.html
 │   ├── index.html
@@ -87,6 +90,9 @@ This project focuses on **clean UI/UX**, **scalable backend design**, and **real
 │   ├── css/
 │   │   └── base.css
 │   └── images/
-│       └── nightleaf-logo.png
-└── README.md
-'''
+│       ├── nightleaf-logo.png
+│       ├── favicon.ico
+│       └── 404.jpg
+├── .gitignore
+├── README.md
+└── venv/              # not committed
