@@ -3,14 +3,26 @@
 <head>
   <title>404 – NightLeaf</title>
   <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <a href="/" class="logo">
     <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}">
     <span>NightLeaf</span>
   </a>
+</div>
+
+<div class="navbar">
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/explore">Explore</a>
+    <a href="/search">Search</a>
+    <a href="/directory">Directory</a>
+    <a href="/collection">Collection</a>
+  </div>
 </div>
 
 <div class="page-content" style="text-align:center;">

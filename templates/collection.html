@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Explore – NightLeaf</title>
+  <title>Your Collection – NightLeaf</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 <body>
 
@@ -25,23 +26,24 @@
 
 <div class="page-content">
 
-  <h1 style="text-align:center;">Explore Manga</h1>
+  <h1 style="text-align:center;">Your Collection</h1>
 
-  <div class="grid">
-    {% for m in manga %}
-      <div class="card">
-        <a href="/manga/{{ m.id }}" style="position:relative; display:block;">
-
-          {% if m.id in liked_ids %}
-            <div class="liked-badge small">❤️ Liked</div>
-          {% endif %}
-
-          <img src="{{ m.image }}">
-          <h3>{{ m.title }}</h3>
-        </a>
-      </div>
-    {% endfor %}
-  </div>
+  {% if manga %}
+    <div class="grid">
+      {% for m in manga %}
+        <div class="card">
+          <a href="/manga/{{ m.id }}">
+            <img src="{{ m.image }}">
+            <h3>{{ m.title }}</h3>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align:center; margin-top:40px;">
+      You haven’t liked any manga yet 🌙
+    </p>
+  {% endif %}
 
 </div>
 

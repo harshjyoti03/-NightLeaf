@@ -1,34 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>{{ manga.title }} – NightLeaf</title>
-  <link rel="stylesheet" href="/static/css/base.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <a href="/" class="logo">
-    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}" alt="NightLeaf Logo">
+    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}">
     <span>NightLeaf</span>
   </a>
 </div>
 
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/explore">Explore</a>
+    <a href="/search">Search</a>
+    <a href="/directory">Directory</a>
+    <a href="/collection">Collection</a>
+  </div>
+</div>
 
-<div class="page-content">
+<!-- PAGE CONTENT -->
+<div class="page-content manga-page">
 
-  <div style="display:flex; gap:30px; padding:20px;">
-    <img src="{{ manga.image }}" class="detail-img">
+  <!-- BACK + LIKE -->
+  <div style="display:flex; gap:15px; margin-bottom:25px;">
+    <button onclick="window.history.back()" class="search-btn secondary">
+      ⬅ Back
+    </button>
 
-    <div>
+    <form method="post" action="/like/{{ manga.id }}">
+      {% if manga.id in liked_ids %}
+        <button type="submit" class="search-btn secondary">
+          💔 Unlike
+        </button>
+      {% else %}
+        <button type="submit" class="search-btn primary">
+          ❤️ Like
+        </button>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- CONTENT -->
+  <div style="display:flex; gap:40px; align-items:flex-start;">
+
+    <!-- COVER -->
+    <div style="position:relative;">
+      <img
+        src="{{ manga.image }}"
+        alt="{{ manga.title }}"
+        class="manga-cover"
+      >
+
+      {% if manga.id in liked_ids %}
+        <div class="liked-badge">
+          ❤️ Liked
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- DETAILS -->
+    <div style="flex:1;">
       <h1>{{ manga.title }}</h1>
+
       <p><b>Authors:</b> {{ manga.authors }}</p>
       <p><b>Genres:</b> {{ manga.genres }}</p>
       <p><b>Status:</b> {{ manga.status }}</p>
       <p><b>Released:</b> {{ manga.year }}</p>
-      <p style="margin-top:10px;">{{ manga.description }}</p>
+
+      <p style="margin-top:18px; line-height:1.6;">
+        {{ manga.description }}
+      </p>
     </div>
+
   </div>
 
 </div>
+
 </body>
 </html>

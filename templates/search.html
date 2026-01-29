@@ -1,56 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Search – NightLeaf</title>
-  <link rel="stylesheet" href="/static/css/base.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 </head>
 <body>
 
 <div class="header">
   <a href="/" class="logo">
-    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}" alt="NightLeaf Logo">
+    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}">
     <span>NightLeaf</span>
   </a>
 </div>
 
+<div class="navbar">
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/explore">Explore</a>
+    <a href="/search">Search</a>
+    <a href="/directory">Directory</a>
+    <a href="/collection">Collection</a>
+  </div>
+</div>
+
 <div class="page-content">
 
-  <div style="text-align:center; margin-bottom:25px;">
-    <form method="get" action="/search">
-      <input type="text" name="q" value="{{ q }}" placeholder="Search manga..." style="width:280px;">
-      <button type="submit">Search</button>
-    </form>
-  </div>
+  <h1 style="text-align:center;">🔍 Search Manga</h1>
 
-  <div class="grid">
-    {% for m in manga %}
-    <div class="card">
-      <a href="/manga/{{ m.id }}">
-        <img src="{{ m.image }}">
-        <h3>{{ m.title }}</h3>
-      </a>
+  <!-- SEARCH BAR -->
+  <form method="get" action="/search" class="search-bar">
+
+    <input type="text" name="q" value="{{ q }}"
+           placeholder="Search manga name..."
+           class="search-input">
+
+    {% if show_results %}
+      <select name="sort" class="search-select">
+        <option value="az" {% if sort == "az" %}selected{% endif %}>A–Z</option>
+        <option value="za" {% if sort == "za" %}selected{% endif %}>Z–A</option>
+        <option value="oldest" {% if sort == "oldest" %}selected{% endif %}>Oldest first</option>
+        <option value="latest" {% if sort == "latest" %}selected{% endif %}>Latest first</option>
+      </select>
+    {% endif %}
+
+    <button type="button" class="search-btn secondary"
+            onclick="toggleFilters()">⚙ Filters</button>
+
+    <button type="submit" class="search-btn primary">Search</button>
+
+    <!-- FILTER PANEL -->
+    <div id="filters" class="filter-panel">
+
+      <input type="hidden" name="sort" value="{{ sort }}">
+
+      <div class="filter-section">
+        <b>Status</b>
+        <div class="filter-options">
+          {% for s in ["ONGOING", "FINISHED", "HIATUS", "CANCELLED"] %}
+            <label>
+              <input type="checkbox" name="status" value="{{ s }}"
+                     {% if s in statuses %}checked{% endif %}>
+              {{ s.title() }}
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <b>Genres</b>
+        <div class="filter-options">
+          {% for g in ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Romance", "Sci-Fi", "Supernatural"] %}
+            <label>
+              <input type="checkbox" name="genre" value="{{ g }}"
+                     {% if g in genres %}checked{% endif %}>
+              {{ g }}
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <b>Release Year</b>
+        <div class="filter-year">
+          <input type="number" name="year_from" value="{{ year_from }}" placeholder="From">
+          <span>—</span>
+          <input type="number" name="year_to" value="{{ year_to }}" placeholder="To">
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:20px;">
+        <button type="submit" class="search-btn primary">Filter Now</button>
+      </div>
+
     </div>
-    {% endfor %}
-  </div>
+  </form>
 
-  <div class="pager">
-    {% if page > 1 %}
-      <a href="/search?q={{ q }}&page={{ page-1 }}">⬅ Prev</a>
+  {% if show_results %}
+    <p style="text-align:center; margin:20px 0;">
+      Showing {{ manga|length }} result{{ 's' if manga|length != 1 else '' }}
+    </p>
+  {% endif %}
+
+  {% if show_results %}
+    {% if manga %}
+      <div class="grid">
+        {% for m in manga %}
+          <div class="card">
+            <a href="/manga/{{ m.id }}" style="position:relative; display:block;">
+
+              {% if m.id in liked_ids %}
+                <div class="liked-badge small">❤️ Liked</div>
+              {% endif %}
+
+              <img src="{{ m.image }}">
+              <h3>{{ m.title }}</h3>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="text-align:center;">No results found.</p>
     {% endif %}
-
-    Page <b>{{ page }}</b> of <b>{{ total_pages }}</b>
-
-    {% if page < total_pages %}
-      <a href="/search?q={{ q }}&page={{ page+1 }}">Next ➡</a>
-    {% endif %}
-
-    <form method="get" action="/search" style="display:inline-block; margin-left:10px;">
-      <input type="hidden" name="q" value="{{ q }}">
-      <input type="number" name="page" min="1" max="{{ total_pages }}" placeholder="Go">
-      <button type="submit">Go</button>
-    </form>
-  </div>
+  {% endif %}
 
 </div>
+
+<script>
+function toggleFilters() {
+  const panel = document.getElementById("filters");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+}
+</script>
+
 </body>
 </html>

@@ -1,44 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>NightLeaf</title>
-  <link rel="stylesheet" href="/static/css/base.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <a href="/" class="logo">
-    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}">
+    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}" alt="NightLeaf Logo">
     <span>NightLeaf</span>
   </a>
 </div>
 
-<div class="page-content" style="text-align:center; max-width:900px; margin:auto;">
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/explore">Explore</a>
+    <a href="/search">Search</a>
+    <a href="/directory">Directory</a>
+    <a href="/collection">Collection</a>
+  </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="page-content landing-content">
 
   <h1>Hi, I’m Harsh 👋</h1>
 
-  <p style="font-size:18px; color:#f3b6cf;">
-    I’m a developer and a huge manga enthusiast.
-    NightLeaf is my personal project where tech meets storytelling.
+  <p style="font-size:18px; color:#f3b6cf; margin-top:12px;">
+    I’m a developer who loves manga, design, and building cool things.
   </p>
 
-  <p style="margin-top:15px;">
-    I built this platform to explore, organize, and celebrate manga —
-    powered by clean APIs and wrapped in a neon-night aesthetic.
+  <p style="margin-top:18px;">
+    <b>NightLeaf</b> is my personal manga discovery project —
+    a place where technology meets storytelling, wrapped in a neon-night aesthetic.
   </p>
 
-  <p style="margin-top:20px;">
+  <p style="margin-top:22px;">
     🔗 <a href="https://github.com/harshjyoti03" target="_blank">
       Visit my GitHub
     </a>
   </p>
 
-  <div style="margin-top:40px;">
+  <!-- EXPLORE BUTTON -->
+  <div style="margin-top:45px;">
     <a href="/explore">
-      <button style="font-size:18px; padding:12px 30px;">
+      <button style="font-size:18px; padding:12px 32px;">
         Explore Now
       </button>
     </a>
+  </div>
+
+  <!-- BIG GLOWING LOGO -->
+  <div class="landing-logo-wrapper">
+    <img
+      src="{{ url_for('static', filename='images/nightleaf-logo.png') }}"
+      alt="NightLeaf Logo Large"
+      class="landing-logo"
+    >
   </div>
 
 </div>

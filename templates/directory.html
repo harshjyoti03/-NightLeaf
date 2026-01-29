@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manga Directory – NightLeaf</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="logo">
+    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}">
+    <span>NightLeaf</span>
+  </a>
+</div>
+
+<div class="navbar">
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/explore">Explore</a>
+    <a href="/search">Search</a>
+    <a href="/directory">Directory</a>
+    <a href="/collection">Collection</a>
+  </div>
+</div>
+
+<div class="page-content" style="max-width:1000px; margin:auto;">
+
+  <h1 style="text-align:center;">📚 Manga Directory</h1>
+
+  <!-- A–Z NAV -->
+  <div style="text-align:center; margin:20px 0;">
+    {% for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+      <a href="/directory?letter={{ ch }}" style="margin:0 6px;">{{ ch }}</a>
+    {% endfor %}
+    <a href="/directory?letter=#" style="margin-left:10px;">#</a>
+  </div>
+
+  <!-- LIST -->
+  <ul style="columns:3; list-style:none; padding:0;">
+    {% for m in manga %}
+      <li style="margin:6px 0;">
+        <a href="/manga/{{ m.id }}">{{ m.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>
+
+</body>
+</html>
