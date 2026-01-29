@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>404 – NightLeaf</title>
+  <link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="logo">
+    <img src="{{ url_for('static', filename='images/nightleaf-logo.png') }}">
+    <span>NightLeaf</span>
+  </a>
+</div>
+
+<div class="page-content" style="text-align:center;">
+
+  <img
+    src="{{ url_for('static', filename='images/404.jpg') }}"
+    style="max-width:640px; margin-top:61px;"
+    alt="404 Not Found"
+  >
+
+  <h2 style="margin-top:20px;">Page Not Found</h2>
+
+  <p>
+    Looks like you wandered off the manga path 🌙
+  </p>
+
+  <a href="/">
+    <button style="margin-top:20px;">
+      Go Home
+    </button>
+  </a>
+
+</div>
+
+</body>
+</html>
