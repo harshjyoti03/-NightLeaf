@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  🚀 <b>Live Website:</b> <i>[Add deployed link here]</i>
+  🚀 <b>Live Website:</b> <i>[...]</i>
 </p>
 
 ---
